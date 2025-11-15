@@ -1,0 +1,98 @@
+---
+alwaysApply: true
+---
+
+# Cursor Rules - Auto Video AI Agent
+本プロジェクトは「撮影した動画をアップするだけでショート動画を完全自動編集するAIエージェント」を開発するためのリポジトリである。
+Cursor は以下のルールに従い、コード生成・設計書更新・リファクタリングを行うこと。
+
+---
+
+## 🔥 1. 基本ポリシー
+1. **コードより先にドキュメントを更新すること。**
+2. **PROJECT_GUIDE.md → docs/requirements → docs/api → docs/architecture → 実装コード**
+   の順を厳守する。
+3. 設計変更が発生した場合は、必ず docs を修正してからコードを生成する。
+4. docs の内容とコードに矛盾があれば、docs を“正”とする。
+5. 新規ファイルを作る際は README / docs / comments の整合性も保つ。
+
+---
+
+## 🗂 2. ディレクトリポリシー
+
+### docs/
+- requirements/ … 要件定義（機能一覧・ユースケース・非機能要件など）
+- api/ … API仕様書（OpenAPI風）
+- design/ … UI/UX設計書
+- architecture/ … システム構成図・ER図・シーケンス
+- meetings/ … 日次ログ・MTGメモ
+
+**ルール：**
+- 新しい機能追加時は requirements → api → architecture の順で必ず追加する。
+- APIの追加変更時は docs/api/*.md を同時に更新する。
+
+### src/
+- backend/ … FastAPI or Next.js API Routes
+- frontend/ … Next.js (App Router) + TailwindCSS
+
+**ルール：**
+- APIは docs/api の仕様と100%一致させる。
+- フロント側は docs/design/screens.md に従って画面を作成する。
+
+---
+
+## ⚙ 3. コード生成ルール
+
+### Backend
+- Python（FastAPI）前提で実装する（特別な理由がない限り）。
+- 処理の流れが複雑な場合は、実装前に sequence 図を docs に追加する。
+- Whisper/ffmpeg/moviepy を使用する際は、OS依存処理をユーティリティ関数として分離する。
+- 外部APIを使う場合は `services/` ディレクトリを利用。
+
+### Frontend
+- Next.js 15（App Router）+ TypeScript + TailwindCSS
+- UIは RSC（React Server Components）対応で構築
+- API呼び出しは `/src/frontend/lib/api.ts` に共通化
+
+---
+
+## 🧪 4. テスト
+- テストを書く場合は backend: `tests/`, frontend: `__tests__/` に置く。
+- 新規機能は最低1つのテストを作成する。
+
+---
+
+## 📄 5. コミットルール（AIが生成するとき）
+- コミットメッセージは "feat: xxx" / "fix: xxx" / "docs: xxx" 形式に統一
+- 大きな変更は PR を作成し説明を書く
+
+---
+
+## 🤖 6. Cursor への基本指示（AI用）
+Cursor はタスクを実行する際、以下を必ず守る：
+
+1. **まずリポジトリ全体を参照すること。**
+2. Issue や目的を理解し、必要なら docs を更新する。
+3. 更新前後の diff に対して説明文を付ける。
+4. コード生成時は、フォルダ構造を壊さず、既存の規約に沿うこと。
+5. 変更したすべてのドキュメントの整合性を取ること。
+6. 重要な変更時は、README.md も更新する。
+
+---
+
+## 🔐 7. 禁止事項
+- docs を更新せずにコードを変更すること
+- API 仕様書と実装の不一致
+- コードだけを先に書く行為
+- 未定義のエンドポイントを追加すること
+- フォルダ構造を勝手に変更すること
+
+---
+
+## 🧭 8. 目的
+本ルールは「Auto Video AI」を
+**“設計書が常に最新の状態で保たれる自走型リポジトリ”**
+にするための仕組みである。
+
+Cursor は、このファイルおよび PROJECT_GUIDE.md を常に参照し、
+ドキュメント駆動の開発（Documentation-Driven Development）を優先すること。
